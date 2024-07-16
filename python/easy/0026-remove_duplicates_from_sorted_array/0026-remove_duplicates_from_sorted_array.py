@@ -23,12 +23,12 @@ from typing import List
 
 class Solution:
 
-    def _overwrite_left_to(self, arr, pos):
+    def _overwrite_left_to(self, arr, pos, end):
         """
         Shift the contents of arr left, overwriting the contents
         of arr[pos].
         """
-        while pos < len(arr) - 1:
+        while pos < end - 1:
             arr[pos] = arr[pos + 1]
             pos += 1
 
@@ -41,7 +41,7 @@ class Solution:
         while i < j:
             # compare to prior elt
             if nums[i] == nums[i - 1]:
-                self._overwrite_left_to(nums, i)
+                self._overwrite_left_to(nums, i, j)
                 j -= 1
             else:
                 i += 1
