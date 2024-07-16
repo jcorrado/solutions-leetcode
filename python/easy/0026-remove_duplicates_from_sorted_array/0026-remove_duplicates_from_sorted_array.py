@@ -23,30 +23,15 @@ from typing import List
 
 class Solution:
 
-    def _overwrite_left_to(self, arr, pos, end):
-        """
-        Shift the contents of arr left, overwriting the contents
-        of arr[pos].
-        """
-        while pos < end - 1:
-            arr[pos] = arr[pos + 1]
-            pos += 1
-
     def removeDuplicates(self, nums: List[int]) -> int:
-        if len(nums) == 1:
-            return 1
+        i = j = 1
+        while i < len(nums):
+            if nums[i] != nums[i - 1]:
+                nums[j] = nums[i]
+                j += 1
+            i += 1
 
-        i = 1
-        j = len(nums)
-        while i < j:
-            # compare to prior elt
-            if nums[i] == nums[i - 1]:
-                self._overwrite_left_to(nums, i, j)
-                j -= 1
-            else:
-                i += 1
-
-        return i
+        return j
 
 
 arr = [1, 2]
