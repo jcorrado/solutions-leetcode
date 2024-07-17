@@ -28,10 +28,12 @@ class Solution:
         max = 0
         tot_prices = len(prices)
         for i in range(0, tot_prices):
+            highest_day = 0
             for j in range(i + 1, tot_prices):
-                spread = prices[j] - prices[i]
-                if spread > max:
-                    max = spread
+                if prices[j] > highest_day:
+                    highest_day = prices[j]
+            if highest_day - prices[i] > max:
+                max = highest_day - prices[i]
         return max
 
 
