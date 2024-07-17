@@ -19,10 +19,17 @@ from typing import List
 
 
 class Solution:
+
+    # Implement with a single array element tmp var
+
     def rotate(self, nums: List[int], k: int) -> None:
         while k > 0:
-            nums.insert(0, nums[-1])
-            del nums[-1]
+            i = len(nums) - 1
+            while i >= 1:
+                tmp = nums[i]
+                nums[i] = nums[i - 1]
+                nums[i - 1] = tmp
+                i -= 1
             k -= 1
 
 
