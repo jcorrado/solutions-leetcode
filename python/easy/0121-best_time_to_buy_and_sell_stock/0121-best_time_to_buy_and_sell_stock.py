@@ -25,16 +25,16 @@ from typing import List
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        max = 0
-        tot_prices = len(prices)
-        for i in range(0, tot_prices):
-            highest_day = 0
-            for j in range(i + 1, tot_prices):
-                if prices[j] > highest_day:
-                    highest_day = prices[j]
-            if highest_day - prices[i] > max:
-                max = highest_day - prices[i]
-        return max
+        lowest_price = max(prices)
+        max_profit = 0
+        for i in range(0, len(prices)):
+            price = prices[i]
+            if price < lowest_price:
+                lowest_price = price
+                profit = max(prices[i:]) - price
+                if profit > max_profit:
+                    max_profit = profit
+        return max_profit
 
 
 print(Solution().maxProfit([7, 1, 5, 3, 6, 4]))
