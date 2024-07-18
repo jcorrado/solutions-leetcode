@@ -30,46 +30,38 @@ from typing import List
 class Solution:
     def trap(self, height: List[int]) -> int:
 
-        def height_to_matrix(arr):
-            # Return a matrix of zeros and ones representing passed
-            # array of heights.
-            rows, cols = max(arr), len(arr)
-            mat = [[0 for _ in range(cols)] for _ in range(rows)]
-            m = 0
-            while m < rows:
-                n = 0
-                while n < cols:
-                    if arr[n] > 0:
-                        mat[m][n] = 1
-                        arr[n] -= 1
-                    n += 1
-                m += 1
-            return mat
-
-        def toggle_padding_zeros(arr):
-            # Toggle leading and trailing zeros to ones, from passed
-            # array, in place.
+        def toggle_leading_zeros(arr):
+            # Toggle leading zeros to ones, from passed array, in
+            # place.
             for i in range(len(arr)):
                 if arr[i] == 0:
                     arr[i] = 1
                 else:
                     break
-            for i in range(len(arr) - 1, -1, -1):
-                if arr[i] == 0:
-                    arr[i] = 1
-                else:
-                    break
 
-        # Remaining zeros represent the negative space (or "cells")
-        # between the bars defined in the "height" elevation map, that
-        # would accumulate water.
         count_of_zeros = 0
-        for row in height_to_matrix(height):
-            toggle_padding_zeros(row)
-            # print(row)
-            for cell in row:
-                if cell == 0:
-                    count_of_zeros += 1
+
+        # Repeatedly loop through our height list one "layer" at a
+        # time.  Imagine expanding a height of three to three rows of
+        # one.
+        for _ in range(max(height)):
+            row = [0 for _ in range(len(height))]
+            n = 0
+            while n < len(height):
+                if height[n] > 0:
+                    row[n] = 1
+                    height[n] -= 1
+                n += 1
+
+            toggle_leading_zeros(row)
+            row.reverse()
+            toggle_leading_zeros(row)
+
+            # Remaining zeros represent the negative space between the
+            # bars defined in the "height" elevation map, that would
+            # accumulate water.
+            count_of_zeros += row.count(0)
+
         return count_of_zeros
 
 
