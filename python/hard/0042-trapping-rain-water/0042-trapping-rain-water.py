@@ -31,6 +31,8 @@ class Solution:
     def trap(self, height: List[int]) -> int:
 
         def height_to_matrix(arr):
+            # Return a matrix of zeros and ones representing passed
+            # array of heights.
             rows, cols = max(arr), len(arr)
             mat = [[0 for _ in range(cols)] for _ in range(rows)]
             m = 0
@@ -44,7 +46,31 @@ class Solution:
                 m += 1
             return mat
 
-        return height_to_matrix(height)
+        def toggle_padding_zeros(arr):
+            # Toggle leading and trailing zeros to ones, from passed
+            # array, in place.
+            for i in range(len(arr)):
+                if arr[i] == 0:
+                    arr[i] = 1
+                else:
+                    break
+            for i in range(len(arr) - 1, -1, -1):
+                if arr[i] == 0:
+                    arr[i] = 1
+                else:
+                    break
+
+        # Remaining zeros represent the negative space (or "cells")
+        # between the bars defined in the "height" elevation map, that
+        # would accumulate water.
+        count_of_zeros = 0
+        for row in height_to_matrix(height):
+            toggle_padding_zeros(row)
+            # print(row)
+            for cell in row:
+                if cell == 0:
+                    count_of_zeros += 1
+        return count_of_zeros
 
 
 arr = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
