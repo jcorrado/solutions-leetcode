@@ -30,10 +30,15 @@ from typing import List
 class Solution:
     def trap(self, height: List[int]) -> int:
 
-        def toggle_leading_zeros(arr):
-            # Toggle leading zeros to ones, from passed array, in
-            # place.
+        def toggle_padding_zeros(arr):
+            # Toggle leading and tailing zeros to ones, from passed
+            # array, in place.
             for i in range(len(arr)):
+                if arr[i] == 0:
+                    arr[i] = 1
+                else:
+                    break
+            for i in range(len(arr) - 1, -1, -1):
                 if arr[i] == 0:
                     arr[i] = 1
                 else:
@@ -53,9 +58,7 @@ class Solution:
                     height[n] -= 1
                 n += 1
 
-            toggle_leading_zeros(row)
-            row.reverse()
-            toggle_leading_zeros(row)
+            toggle_padding_zeros(row)
 
             # Remaining zeros represent the negative space between the
             # bars defined in the "height" elevation map, that would
