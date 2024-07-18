@@ -19,20 +19,27 @@ from typing import List
 
 
 class Solution:
-
-    # Implement with a single array element tmp var
-
     def rotate(self, nums: List[int], k: int) -> None:
-        while k > 0:
-            i = len(nums) - 1
-            while i >= 1:
-                tmp = nums[i]
-                nums[i] = nums[i - 1]
-                nums[i - 1] = tmp
-                i -= 1
-            k -= 1
+
+        def reverse(arr, i, j):
+            while i < j:
+                arr[i], arr[j] = arr[j], arr[i]
+                i += 1
+                j -= 1
+
+        n = len(nums)
+        k = k % n
+        end = n - 1
+        middle = end - k
+        reverse(nums, 0, middle)
+        reverse(nums, middle + 1, end)
+        reverse(nums, 0, end)
 
 
 nums = [1, 2, 3, 4, 5, 6, 7]
+Solution().rotate(nums, 3)
+print(nums)
+
+nums = [1, 2]
 Solution().rotate(nums, 3)
 print(nums)
