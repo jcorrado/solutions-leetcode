@@ -13,60 +13,51 @@ array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water
 (blue section) are being trapped.
 """
 
-# height_to_matrix():
-#
-# from:
-#  [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
-#
-# to:
-# [[0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
-#  [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0],
-#  [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]]
-
+# arr = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
+# print(Solution().trap(arr))
 
 from typing import List
 
 
-class Solution:
-    def trap(self, height: List[int]) -> int:
+# class Solution:
+#     def trap(self, height: List[int]) -> int:
 
-        def toggle_padding_zeros(arr):
-            # Toggle leading and tailing zeros to ones, from passed
-            # array, in place.
-            for i in range(len(arr)):
-                if arr[i] == 0:
-                    arr[i] = 1
-                else:
-                    break
-            for i in range(len(arr) - 1, -1, -1):
-                if arr[i] == 0:
-                    arr[i] = 1
-                else:
-                    break
+#         capacity = 0
 
-        count_of_zeros = 0
+#         def valley_capacity(left, right, arr):
+#             # Calculate the capacity of the space between left and
+#             # right, exclusive.
+#             capacity = 0
+#             top = min(arr[left], arr[right])
+#             i = left - 1
+#             while i < right:
+#                 capacity += top - arr[i]
+#                 i += 1
+#             return capacity
 
-        # Repeatedly loop through our height list one "layer" at a
-        # time.  Imagine expanding a height of three to three rows of
-        # one.
-        for _ in range(max(height)):
-            row = [0 for _ in range(len(height))]
-            n = 0
-            while n < len(height):
-                if height[n] > 0:
-                    row[n] = 1
-                    height[n] -= 1
-                n += 1
 
-            toggle_padding_zeros(row)
+def find_valleys(end, arr):
+    # Return a list of (left, right) valley tuples, found in
+    # arr.  This algo will miss valleys at the end or arr and
+    # needs to be re-run on the tail, in reverse.
+    valleys = []
 
-            # Remaining zeros represent the negative space between the
-            # bars defined in the "height" elevation map, that would
-            # accumulate water.
-            count_of_zeros += row.count(0)
+    # Advance valley markers
+    i = left = right = 0
+    while i <= end:
+        if arr[i] >= arr[left]:
+            left = right = i
+        else:
+            right = i
 
-        return count_of_zeros
+        # Possibly save a newly defined valley
+        if right > left + 1 and arr[right] >= arr[left]:
+            valleys.append([left, right])
+
+        i += 1
+
+    return valleys
 
 
 arr = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
-print(Solution().trap(arr))
+find_valleys(len(arr) - 1, arr)
