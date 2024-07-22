@@ -43,7 +43,7 @@ class Solution:
             left, right = 0, 1
             while right <= end:
                 if arr[right] >= arr[left]:
-                    if right > left + 1:
+                    if right - left >= 2:
                         # We've just exited a valley.  Save it.
                         valleys.append([left, right])
                     left = right
@@ -52,25 +52,24 @@ class Solution:
             # Run that same alog again in "reverse" for the tail of the
             # heights list; that is, everything after the last found valley.
             # TODO: refactor this if the algo works.
-            left = len(arr) - 1
-            end = 0
+            right = len(arr) - 1
+            left = right - 1
+            start = 0
             if valleys:
-                end = valleys[-1][1]  # "right" side of last valley
+                start = valleys[-1][1]  # right side of last valley
 
-            right = left - 1
-            while right >= end:
-                if arr[right] >= arr[left]:
-                    if right > left + 1:
+            while left >= start:
+                if arr[left] >= arr[right]:
+                    if right - left >= 2:
                         # We've just exited a valley.  Save it.
-                        valleys.append([right, left])
-                    left = right
-                right -= 1
+                        valleys.append([left, right])
+                    right = left
+                left -= 1
 
             return valleys
 
         capacity = 0
         for left, right in find_valleys(height, len(height) - 1):
-            print("adding valley:", left, right)
             capacity += valley_capacity(height, left, right)
         return capacity
 
@@ -80,9 +79,6 @@ class Solution:
 
 # arr = [4, 2, 0, 3, 2, 5]
 # print(Solution().trap(arr))
-
-# arr = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
-# find_valleys(arr, len(arr) - 1)
 
 
 # from:
@@ -94,62 +90,3 @@ class Solution:
 #  [0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1]]
 #   0  1  2  3  4  5  6  7  8  9 10 11
 #         V     V  V  V        V
-
-
-# def find_valleys(arr, end):
-#     # Return a list of (left, right) valley tuples, found in
-#     # arr.  This algo will miss valleys at the end of arr and
-#     # needs to be re-run on the tail, in reverse.
-#     valleys = []
-#     left, right = 0, 1
-#     while right <= end:
-#         if arr[right] >= arr[left]:
-#             if right > left + 1:
-#                 # We've just exited a valley.  Save it.
-#                 valleys.append([left, right])
-#             left = right
-#         right += 1
-
-#     # For dev
-#     return valleys
-
-
-def find_valleys(arr, end):
-    # Return a list of (left, right) valley tuples, found in
-    # arr.  This algo will miss valleys at the end of arr and
-    # needs to be re-run on the tail, in reverse.
-    valleys = []
-    left, right = 0, 1
-    while right <= end:
-        if arr[right] >= arr[left]:
-            if right > left + 1:
-                # We've just exited a valley.  Save it.
-                valleys.append([left, right])
-            left = right
-        right += 1
-
-    # Run that same alog again in "reverse" for the tail of the
-    # heights list; that is, everything after the last found valley.
-    # TODO: refactor this if the algo works.
-    left = len(arr) - 1
-    end = 0
-    if valleys:
-        end = valleys[-1][1]  # "right" side of last valley
-
-    right = left - 1
-    while right >= end:
-        if arr[right] >= arr[left]:
-            if right < left + 1:
-                # We've just exited a valley.  Save it.
-                valleys.append([right, left])
-            left = right
-        right -= 1
-
-    return valleys
-
-
-arr = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
-print(find_valleys(arr, len(arr) - 1))
-
-arr = [4, 2, 0, 3, 2, 5]
-print(find_valleys(arr, len(arr) - 1))
