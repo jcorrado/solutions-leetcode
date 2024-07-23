@@ -20,8 +20,6 @@ Explanation: "leeto" did not occur in "leetcode", so we return -1.
 
 class Solution:
     def strStr(self, haystack: str, needle: str) -> int:
-        # Return quickly if needle < haystack
-
         i, n = 0, len(needle)
         while i <= len(haystack) - n:
             if needle == haystack[i : i + n]:
