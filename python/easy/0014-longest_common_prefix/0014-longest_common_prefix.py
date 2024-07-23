@@ -22,7 +22,7 @@ from typing import List
 
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-        prefix = []
+        prefix = ""
         strs.sort(key=len)
         shortest = strs.pop(0)
         required_matches = len(strs)
@@ -32,11 +32,11 @@ class Solution:
                 if shortest[i] == str[i]:
                     matches += 1
             if matches == required_matches:
-                prefix.append(char)
+                prefix += char
             else:
                 break
-        return "".join(prefix)
+        return prefix
 
 
 print(Solution().longestCommonPrefix(["flower", "flow", "flight"]))
-# print(Solution().longestCommonPrefix(["dog", "racecar", "car"]))
+print(Solution().longestCommonPrefix(["dog", "racecar", "car"]))
