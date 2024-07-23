@@ -20,6 +20,8 @@ Explanation: "leeto" did not occur in "leetcode", so we return -1.
 
 class Solution:
     def strStr(self, haystack: str, needle: str) -> int:
+        if len(haystack) < len(needle):
+            return -1
         i, n = 0, len(needle)
         while i <= len(haystack) - n:
             if needle == haystack[i : i + n]:
@@ -28,6 +30,6 @@ class Solution:
         return -1
 
 
-# print(Solution().strStr("sadbutsad", "sad"))
-# print(Solution().strStr("leetcode", "leeto"))
-# print(Solution().strStr("a", "a"))
+print(Solution().strStr("sadbutsad", "sad"))
+print(Solution().strStr("leetcode", "leeto"))
+print(Solution().strStr("a", "a"))
