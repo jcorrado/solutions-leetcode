@@ -23,15 +23,14 @@ Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
 class Solution:
     def romanToInt(self, s: str) -> int:
         numerals = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
-
-        tot = numerals[s[0]]
-        i = 1
-        while i < len(s):
-            if numerals[s[i - 1]] < numerals[s[i]]:
-                tot += numerals[s[i]] - (numerals[s[i - 1]] * 2)
+        tot, last_n = 0, 0
+        for c in s:
+            n = numerals[c]
+            if last_n < n:
+                tot += n - (last_n * 2)
             else:
-                tot += numerals[s[i]]
-            i += 1
+                tot += n
+            last_n = n
         return tot
 
 
