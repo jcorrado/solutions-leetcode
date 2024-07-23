@@ -35,50 +35,43 @@ class Solution:
                 i += 1
             return capacity
 
-        def find_valleys(arr, end):
-            # Return a list of (left, right) valley tuples, found in
-            # arr.  This algo will miss valleys at the end of arr and
-            # needs to be re-run on the tail, in reverse.
-            valleys = []
-            left, right = 0, 1
-            while right <= end:
-                if arr[right] >= arr[left]:
-                    if right - left >= 2:
-                        # We've just exited a valley.  Save it.
-                        valleys.append([left, right])
-                    left = right
-                right += 1
-
-            # Run that same alog again in "reverse" for the tail of the
-            # heights list; that is, everything after the last found valley.
-            # TODO: refactor this if the algo works.
-            right = len(arr) - 1
-            left = right - 1
-            start = 0
-            if valleys:
-                start = valleys[-1][1]  # right side of last valley
-
-            while left >= start:
-                if arr[left] >= arr[right]:
-                    if right - left >= 2:
-                        # We've just exited a valley.  Save it.
-                        valleys.append([left, right])
-                    right = left
-                left -= 1
-
-            return valleys
-
+        # This strategy will miss valleys at the end of arr and needs
+        # to be re-run on the tail, in reverse.  We do that next.
         capacity = 0
-        for left, right in find_valleys(height, len(height) - 1):
-            capacity += valley_capacity(height, left, right)
+
+        last_right = 0
+
+        left, right = 0, 1
+        while right <= len(height) - 1:
+            if height[right] >= height[left]:
+                if right - left >= 2:
+                    # we've just exited a valley
+                    capacity += valley_capacity(height, left, right)
+                    last_right = right
+                left = right
+            right += 1
+
+        # Run that same algorithm again in "reverse" for the tail of
+        # the heights list; that is, everything after the last found
+        # valley, saved in `last_right`.
+        start = last_right
+        right = len(height) - 1
+        left = right - 1
+        while left >= start:
+            if height[left] >= height[right]:
+                if right - left >= 2:
+                    capacity += valley_capacity(height, left, right)
+                right = left
+            left -= 1
+
         return capacity
 
 
-# arr = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
-# print(Solution().trap(arr))
+arr = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
+print(Solution().trap(arr))
 
-# arr = [4, 2, 0, 3, 2, 5]
-# print(Solution().trap(arr))
+arr = [4, 2, 0, 3, 2, 5]
+print(Solution().trap(arr))
 
 
 # from:
