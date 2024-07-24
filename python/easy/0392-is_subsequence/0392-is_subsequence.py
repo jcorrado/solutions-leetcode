@@ -33,10 +33,8 @@ class Solution:
         while i < len_s and j < len_t:
             if s[i] == t[j]:
                 i += 1
-            if i == len_s:
-                return True
             j += 1
-        return False
+        return i == len_s
 
 
 print(Solution().isSubsequence("abc", "ahbgdc"))
