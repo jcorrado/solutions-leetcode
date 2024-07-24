@@ -19,15 +19,24 @@ Input: s = "axc", t = "ahbgdc"
 Output: false
 """
 
-import re
-
 
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
-        pat = ""
-        for c in s:
-            pat += c + ".*?"
-        return bool(re.search(pat, t))
+        i, j = 0, 0
+        len_s, len_t = len(s), len(t)
+
+        if len_s == 0:
+            return True
+        if len_s > len_t:
+            return False
+
+        while i < len_s and j < len_t:
+            if s[i] == t[j]:
+                i += 1
+            if i == len_s:
+                return True
+            j += 1
+        return False
 
 
 print(Solution().isSubsequence("abc", "ahbgdc"))
