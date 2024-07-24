@@ -24,14 +24,22 @@ Output: [0,1]
 """
 
 from typing import List
+from collections import defaultdict
 
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        for i in range(len(nums)):
-            for j in range(i + 1, len(nums)):
-                if nums[i] + nums[j] == target:
+        d = defaultdict(list)
+        for i, n in enumerate(nums):
+            d[n].append(i)
+
+        for i, n in enumerate(nums):
+            delta = target - n
+            for j in d[delta]:
+                if j != i:
                     return [i, j]
 
 
 print(Solution().twoSum([2, 7, 11, 15], 9))
+print(Solution().twoSum([3, 2, 4], 6))
+print(Solution().twoSum([3, 3], 6))
