@@ -30,11 +30,11 @@ class Solution:
         if len_s > len_t:
             return False
 
-        while i < len_s and j < len_t:
+        while j < len_t:
             if s[i] == t[j]:
                 i += 1
-            if i == len_s:
-                return True
+                if i == len_s:
+                    return True
             j += 1
         return False
 
