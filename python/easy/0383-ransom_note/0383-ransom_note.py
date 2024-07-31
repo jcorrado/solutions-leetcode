@@ -27,17 +27,19 @@ from collections import defaultdict
 
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
-        available = defaultdict(int)
-        for c in magazine:
-            available[c] += 1
-
+        note_letters = defaultdict(int)
         for c in ransomNote:
-            if c in available and available[c] > 0:
-                available[c] -= 1
-            else:
-                return False
+            note_letters[c] += 1
 
-        return True
+        found_letters, needed_letters = 0, len(ransomNote)
+        for c in magazine:
+            if c in note_letters and note_letters[c] > 0:
+                note_letters[c] -= 1
+                found_letters += 1
+                if found_letters == needed_letters:
+                    return True
+
+        return False
 
 
 print(Solution().canConstruct("a", "b"))
