@@ -31,17 +31,17 @@ class Solution:
 
         mapping = {}
         seen = set()
-        for i, c in enumerate(pattern):
+        for i in range(len(pattern)):
             word = words[i]
 
-            if c in mapping:
-                if mapping[c] != word:
+            if pattern[i] in mapping:
+                if mapping[pattern[i]] != word:
                     return False
             else:
                 if word in seen:
                     return False
                 else:
-                    mapping[c] = word
+                    mapping[pattern[i]] = word
                     seen.add(word)
 
         return True
