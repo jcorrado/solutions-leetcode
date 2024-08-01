@@ -23,28 +23,28 @@ Output: false
 
 class Solution:
     def wordPattern(self, pattern: str, s: str) -> bool:
-        def get_pat(s):
-            pat = ""
-            for w in s.split():
-                pat += w[0:1]
-            return pat
+        words = s.split()
+        length = len(pattern)
 
-        def is_isomorphic(s: str, t: str) -> bool:
-            s_idx = [0] * 2**7  # 7-bit ASCII
-            t_idx = [0] * 2**7
-            for i in range(len(s)):
-                if s_idx[ord(s[i])] != t_idx[ord(t[i])]:
-                    return False
-                else:
-                    s_idx[ord(s[i])] = i + 1
-                    t_idx[ord(t[i])] = i + 1
-            return True
-
-        word_pat = get_pat(s)
-        if len(pattern) != len(word_pat):
+        if length != len(words):
             return False
 
-        return is_isomorphic(pattern, word_pat)
+        mapping = {}
+        seen = set()
+        for i, c in enumerate(pattern):
+            word = words[i]
+
+            if c in mapping:
+                if mapping[c] != word:
+                    return False
+            else:
+                if word in seen:
+                    return False
+                else:
+                    mapping[c] = word
+                    seen.add(word)
+
+        return True
 
 
 print(Solution().wordPattern("abba", "dog cat cat dog"))
