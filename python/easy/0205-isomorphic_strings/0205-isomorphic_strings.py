@@ -27,17 +27,14 @@ Output: true
 
 class Solution:
     def isIsomorphic(self, s: str, t: str) -> bool:
-        mappings, used = {}, set()
+        s_idx = [0] * 2**7  # 7-bit ASCII
+        t_idx = [0] * 2**7
         for i in range(len(s)):
-            if s[i] in mappings:
-                if mappings[s[i]] != t[i]:
-                    return False
+            if s_idx[ord(s[i])] != t_idx[ord(t[i])]:
+                return False
             else:
-                if t[i] in used:
-                    return False
-                else:
-                    mappings[s[i]] = t[i]
-                    used.add(t[i])
+                s_idx[ord(s[i])] = i + 1
+                t_idx[ord(t[i])] = i + 1
         return True
 
 
