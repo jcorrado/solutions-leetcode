@@ -36,17 +36,15 @@ class Solution:
         mappings, used = {}, set()
         i = 0
         while i < s_len:
-            cs = s[i]
-            ct = t[i]
-            if cs in mappings:
-                if mappings[cs] != ct:
+            if s[i] in mappings:
+                if mappings[s[i]] != t[i]:
                     return False
             else:
-                if ct in used:
+                if t[i] in used:
                     return False
                 else:
-                    mappings[cs] = ct
-                    used.add(ct)
+                    mappings[s[i]] = t[i]
+                    used.add(t[i])
             i += 1
 
         return True
