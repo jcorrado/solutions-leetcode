@@ -27,15 +27,8 @@ Output: true
 
 class Solution:
     def isIsomorphic(self, s: str, t: str) -> bool:
-        s_len = len(s)
-        t_len = len(t)
-
-        if s_len != t_len:
-            return False
-
         mappings, used = {}, set()
-        i = 0
-        while i < s_len:
+        for i in range(len(s)):
             if s[i] in mappings:
                 if mappings[s[i]] != t[i]:
                     return False
@@ -45,8 +38,6 @@ class Solution:
                 else:
                     mappings[s[i]] = t[i]
                     used.add(t[i])
-            i += 1
-
         return True
 
 
