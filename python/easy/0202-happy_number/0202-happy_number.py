@@ -40,14 +40,15 @@ class Solution:
         seen = set()
         queue = [n]
         for x in queue:
-            x = sum_squared_digits(x)
-            if x == 1:
-                return True
-            elif x in seen:
+            if x in seen:
                 return False
             else:
-                seen.add(x)
-                queue.append(x)
+                y = sum_squared_digits(x)
+                if y == 1:
+                    return True
+                else:
+                    seen.add(x)
+                    queue.append(y)
 
         return True
 
