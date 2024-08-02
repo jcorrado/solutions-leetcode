@@ -19,19 +19,23 @@ Output: false
 """
 
 from typing import List
+from collections import defaultdict
 
 
 class Solution:
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
-        length = len(nums)
-        i = 0
-        while i < length:
-            offset = 1
-            while offset <= k and i + offset < length:
-                if nums[i] == nums[i + offset]:
+        idx_by_value = defaultdict(list)
+        for idx, x in enumerate(nums):
+            idx_by_value[x].append(idx)
+
+        for idxs in idx_by_value.values():
+            length = len(idxs)
+            i, j = 0, 1
+            while j < length:
+                if abs(idxs[j] - idxs[i]) <= k:
                     return True
-                offset += 1
-            i += 1
+                i += 1
+                j += 1
         return False
 
 
