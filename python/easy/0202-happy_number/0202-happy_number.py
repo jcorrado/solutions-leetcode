@@ -32,10 +32,14 @@ Output: false
 class Solution:
     def isHappy(self, n: int) -> bool:
         def sum_squared_digits(n):
-            accum = 0
-            for x in str(n):
-                accum += int(x) ** 2
-            return accum
+            accum = []
+            while n > 0:
+                accum.append(n % 10)
+                n = n // 10
+            tot = 0
+            for x in accum:
+                tot += x**2
+            return tot
 
         seen = set()
         queue = [n]
@@ -49,7 +53,6 @@ class Solution:
                 else:
                     seen.add(x)
                     queue.append(y)
-
         return True
 
 
