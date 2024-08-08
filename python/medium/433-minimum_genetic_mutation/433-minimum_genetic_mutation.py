@@ -71,8 +71,6 @@ class Solution:
                         return False
             return True
 
-        # Naive first pass: add all possible edges, not worrying about
-        # duplicates
         if startGene not in bank:
             bank.append(startGene)
 
