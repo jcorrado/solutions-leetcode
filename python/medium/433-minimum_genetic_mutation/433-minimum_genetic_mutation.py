@@ -35,10 +35,10 @@ from collections import defaultdict
 
 class Graph:
     def __init__(self):
-        self.edges = defaultdict(dict)
+        self.edges = defaultdict(set)
 
     def add_edge(self, from_node, to_node):
-        self.edges[from_node][to_node] = 1
+        self.edges[from_node].add(to_node)
 
     def find_paths(self, start, end):
         paths = []
