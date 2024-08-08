@@ -74,10 +74,14 @@ class Solution:
         if startGene not in bank:
             bank.append(startGene)
 
-        for from_node in bank:
-            for to_node in bank:
-                if from_node != to_node and _valid_mutation(from_node, to_node):
-                    self.graph.add_edge(from_node, to_node)
+        i, n = 0, len(bank) - 1
+        while i <= n:
+            j = 0
+            while j <= n:
+                if i != j and _valid_mutation(bank[i], bank[j]):
+                    self.graph.add_edge(bank[i], bank[j])
+                j += 1
+            i += 1
 
         paths = self.graph.find_paths(startGene, endGene)
         if paths:
