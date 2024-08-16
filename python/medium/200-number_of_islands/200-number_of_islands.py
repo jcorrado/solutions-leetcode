@@ -37,8 +37,8 @@ class Graph:
         self.nodes = set()
         self.edges = defaultdict(set)
 
-    def add_node(self, node_id):
-        self.nodes.add(node_id)
+    def add_node(self, node):
+        self.nodes.add(node)
 
     def add_edge(self, from_node, to_node):
         self.edges[from_node].add(to_node)
@@ -61,38 +61,33 @@ class Graph:
 
 
 class Solution:
-    def numIslands(self, grid: List[List[str]]) -> int:
-        def cell_id(i, j, n):
-            return (i * (n + 1)) + j
+    def __init__(self):
+        self.graph = Graph()
 
-        graph = Graph()
-        m = len(grid) - 1
-        n = len(grid[0]) - 1
-        i = 0
-        while i <= m:
-            j = 0
-            while j <= n:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        for i in range(m):
+            for j in range(n):
                 # Is this cell land?
                 if grid[i][j] == "1":
-                    node_id = cell_id(i, j, n)
-                    graph.add_node(node_id)
+                    node = (i, j)
+                    self.graph.add_node(node)
 
                     # Does it have land to the right?
-                    if j < n and grid[i][j + 1] == "1":
-                        graph.add_edge(node_id, cell_id(i, j + 1, n))
+                    if j < n - 1 and grid[i][j + 1] == "1":
+                        self.graph.add_edge(node, (i, j + 1))
 
                     # Does it have land bellow?
-                    if i < m and grid[i + 1][j] == "1":
-                        graph.add_edge(node_id, cell_id(i + 1, j, n))
-                j += 1
-            i += 1
+                    if i < m - 1 and grid[i + 1][j] == "1":
+                        self.graph.add_edge(node, (i + 1, j))
 
-        nodes = graph.get_nodes()
+        nodes = self.graph.get_nodes()
         cnt = 0
         while nodes:
             cnt += 1
             node = nodes.pop()
-            reachable = graph.reachable_from(node)
+            reachable = self.graph.reachable_from(node)
             nodes = nodes - reachable
         return cnt
 
@@ -108,6 +103,8 @@ print(
         ]
     )
 )
+
+# 3
 
 # print(g.nodes)
 # # {0, 1, 5, 6, 12, 18, 19}
