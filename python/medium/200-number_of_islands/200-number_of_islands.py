@@ -71,16 +71,16 @@ class Solution:
             for j in range(n):
                 # Is this cell land?
                 if grid[i][j] == "1":
-                    node = (i, j)
-                    self.graph.add_node(node)
+                    from_node = (i, j)
+                    self.graph.add_node(from_node)
 
                     # Does it have land to the right?
                     if j < n - 1 and grid[i][j + 1] == "1":
-                        self.graph.add_edge(node, (i, j + 1))
+                        self.graph.add_edge(from_node, (i, j + 1))
 
                     # Does it have land bellow?
                     if i < m - 1 and grid[i + 1][j] == "1":
-                        self.graph.add_edge(node, (i + 1, j))
+                        self.graph.add_edge(from_node, (i + 1, j))
 
         nodes = self.graph.get_nodes()
         cnt = 0
