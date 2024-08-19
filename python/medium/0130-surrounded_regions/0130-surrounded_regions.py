@@ -45,35 +45,51 @@ from typing import List
 
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
-
-        def get_neighbors(x, y):
-            # left, right, above, below
-            return ((x, y - 1), (x, y + 1), (x - 1, y), (x + 1, y))
-
         m = len(board) - 1
         n = len(board[0]) - 1
 
-        def is_inner_o(x, y):
-            return x > 0 and x < m and y > 0 and y < n and board[x][y] == "O"
+        def get_o_neighbors(x, y):
+            neighbors = []
+            # Check left
+            if y > 0 and board[x][y - 1] == "O":
+                neighbors.append((x, y - 1))
 
-        def is_x(x, y):
-            return board[x][y] == "X"
+            # Check above
+            if x > 0 and board[x - 1][y] == "O":
+                neighbors.append((x - 1, y))
 
-        for i in range(1, m):
-            for j in range(1, n):
-                if board[i][j] == "O":
-                    queue = [(i, j)]
-                    for x, y in queue:
-                        matching_neighbors = 0
-                        for neighbor in get_neighbors(x, y):
-                            if is_inner_o(*neighbor):
-                                queue.append(neighbor)
-                                matching_neighbors += 1
-                            elif is_x(*neighbor):
-                                matching_neighbors += 1
+            # Check right
+            if y < n and board[x][y + 1] == "O":
+                neighbors.append((x, y + 1))
 
-                        if matching_neighbors == 4:
-                            board[x][y] = "X"
+            # Check below
+            if x < m and board[x + 1][y] == "O":
+                neighbors.append((x + 1, y))
+
+            return neighbors
+
+        # Walk board perimeter, clockwise from 0,0
+        perimeter = (
+            [(0, y) for y in range(n + 1)]
+            + [(x, n) for x in range(1, m + 1)]
+            + [(m, y) for y in range(n - 1, -1, -1)]
+            + [(x, 0) for x in range(m - 1, 0, -1)]
+        )
+
+        for x, y in perimeter:
+            if board[x][y] == "O":
+                queue = [(x, y)]
+                for x, y in queue:
+                    board[x][y] = "M"
+                    for neighbor in get_o_neighbors(x, y):
+                        queue.append(neighbor)
+
+        for x in range(m + 1):
+            for y in range(n + 1):
+                if board[x][y] == "O":
+                    board[x][y] = "X"
+                elif board[x][y] == "M":
+                    board[x][y] = "O"
 
         return board
 
@@ -95,3 +111,7 @@ print(
 #  ["X","O","X","X"]]
 
 print(Solution().solve([["O", "O", "O"], ["O", "O", "O"], ["O", "O", "O"]]))
+
+# [["O", "O", "O"],
+#  ["O", "O", "O"],
+#  ["O", "O", "O"]]

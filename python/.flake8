@@ -1,9 +1,6 @@
 # -*- mode: conf -*-
 
 [flake8]
-# Ignore specific error codes
-ignore = E501
-
-# You can also set the maximum line length if you prefer a custom limit
-# instead of ignoring the error
-# max-line-length = 120
+# E501: Line length
+# W503: Line break before binary operator
+ignore = E501, W503
