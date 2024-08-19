@@ -68,7 +68,15 @@ class Solution:
 
             return neighbors
 
-        def mark_cells(x, y):
+        # Walk board perimeter, clockwise from 0,0
+        perimeter = (
+            [(0, y) for y in range(n + 1)]
+            + [(x, n) for x in range(1, m + 1)]
+            + [(m, y) for y in range(n - 1, -1, -1)]
+            + [(x, 0) for x in range(m - 1, 0, -1)]
+        )
+
+        for x, y in perimeter:
             if board[x][y] == "O":
                 queue = [(x, y)]
                 while queue:
@@ -77,18 +85,6 @@ class Solution:
                     for neighbor in get_o_neighbors(x, y):
                         queue.append(neighbor)
 
-        # Mark Os to save, from top or bottom row
-        for x in (0, m):
-            for y in range(0, n + 1):
-                mark_cells(x, y)
-
-        # Mark Os to save, from left or right edge
-        for y in (0, n):
-            for x in range(0, m + 1):
-                mark_cells(x, y)
-
-        # Final pass to flip unmarked Os to Xs, and then revert marked
-        # ("M") Os to Os.
         for x in range(m + 1):
             for y in range(n + 1):
                 if board[x][y] == "O":
@@ -110,22 +106,13 @@ print(
     )
 )
 
-[["X", "X", "X", "X"], ["X", "X", "X", "X"], ["X", "X", "X", "X"], ["X", "O", "X", "X"]]
+# [["X","X","X","X"],
+#  ["X","X","X","X"],
+#  ["X","X","X","X"],
+#  ["X","O","X","X"]]
 
 print(Solution().solve([["O", "O", "O"], ["O", "O", "O"], ["O", "O", "O"]]))
 
 # [["O", "O", "O"],
 #  ["O", "O", "O"],
 #  ["O", "O", "O"]]
-
-
-print(
-    Solution().solve(
-        [
-            ["O", "O", "O", "O"],
-            ["O", "O", "O", "O"],
-            ["O", "O", "O", "O"],
-            ["O", "O", "O", "O"],
-        ]
-    )
-)
