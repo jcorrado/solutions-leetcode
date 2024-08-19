@@ -68,7 +68,7 @@ class Solution:
 
             return neighbors
 
-        # Walk board perimeter, clockwise from 0,0
+        # Calc perimeter coordinates, clockwise from 0,0.
         perimeter = (
             [(0, y) for y in range(n + 1)]
             + [(x, n) for x in range(1, m + 1)]
@@ -76,6 +76,7 @@ class Solution:
             + [(x, 0) for x in range(m - 1, 0, -1)]
         )
 
+        # Walk perimeter marking Os to save as Ms.
         for x, y in perimeter:
             if board[x][y] == "O":
                 queue = [(x, y)]
@@ -85,6 +86,8 @@ class Solution:
                     for neighbor in get_o_neighbors(x, y):
                         queue.append(neighbor)
 
+        # Final pass to flip unmarked Os to Xs, and then revert Os
+        # currently marked as Ms, to Os.
         for x in range(m + 1):
             for y in range(n + 1):
                 if board[x][y] == "O":
