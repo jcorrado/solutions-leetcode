@@ -38,20 +38,25 @@ from typing import List
 
 class Solution:
     def summaryRanges(self, nums: List[int]) -> List[str]:
-        def format_range(i, j):
-            return f"{nums[i]}" if i == j else f"{nums[i]}->{nums[j]}"
+        def format_range(start, end):
+            if start == end:
+                return f"{start}"
+            else:
+                return f"{start}->{end}"
 
         n = len(nums)
         if n == 0:
             return
 
-        last_start_idx = 0
         ranges = []
-        for i in range(n):
-            if (nums[i] - nums[i - 1]) > 1:
-                ranges.append(format_range(last_start_idx, i - 1))
-                last_start_idx = i
-        ranges.append(format_range(last_start_idx, n - 1))
+        start = last = curr = nums[0]
+        for i in range(1, n):
+            curr = nums[i]
+            if (curr - last) > 1:
+                ranges.append(format_range(start, last))
+                start = curr
+            last = curr
+        ranges.append(format_range(start, curr))
 
         return ranges
 
