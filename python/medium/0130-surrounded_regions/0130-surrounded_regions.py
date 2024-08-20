@@ -49,23 +49,14 @@ class Solution:
         n = len(board[0]) - 1
 
         def get_o_neighbors(x, y):
+            # l, r, u, d
+            dirs = ((0, -1), (0, 1), (-1, 0), (1, 0))
+
             neighbors = []
-            # Check left
-            if y > 0 and board[x][y - 1] == "O":
-                neighbors.append((x, y - 1))
-
-            # Check above
-            if x > 0 and board[x - 1][y] == "O":
-                neighbors.append((x - 1, y))
-
-            # Check right
-            if y < n and board[x][y + 1] == "O":
-                neighbors.append((x, y + 1))
-
-            # Check below
-            if x < m and board[x + 1][y] == "O":
-                neighbors.append((x + 1, y))
-
+            for dx, dy in dirs:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx <= m and 0 <= ny <= n and board[nx][ny] == "O":
+                    neighbors.append((nx, ny))
             return neighbors
 
         # Calc perimeter coordinates, clockwise from 0,0.
