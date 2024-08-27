@@ -20,10 +20,13 @@ class Solution:
         opening = set(closing.values())
         delimeters = []
 
+        if len(s) % 2 != 0:
+            return False
+
         for elt in s:
             if elt in opening:
                 delimeters.append(elt)
-            elif delimeters[-1] == closing[elt]:
+            elif delimeters and delimeters[-1] == closing[elt]:
                 delimeters.pop()
             else:
                 return False
@@ -46,3 +49,6 @@ print(Solution().isValid("(]"))
 # Example 4:
 print(Solution().isValid("([])"))
 # True
+
+print(Solution().isValid("){"))
+# False
