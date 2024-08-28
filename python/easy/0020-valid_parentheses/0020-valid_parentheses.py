@@ -18,20 +18,18 @@ class Solution:
     def isValid(self, s: str) -> bool:
         closing = {")": "(", "}": "{", "]": "["}
         opening = set(closing.values())
-        delimeters = []
 
         if len(s) % 2 != 0:
             return False
 
+        st = []
         for elt in s:
             if elt in opening:
-                delimeters.append(elt)
-            elif delimeters and delimeters[-1] == closing[elt]:
-                delimeters.pop()
-            else:
+                st.append(elt)
+            elif not st or st.pop() != closing[elt]:
                 return False
 
-        return False if delimeters else True
+        return not st
 
 
 # Example 1:
