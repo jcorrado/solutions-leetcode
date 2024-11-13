@@ -7,6 +7,8 @@ I use Python 3 for my solutions. Plus one in Clojure for fun even though you can
 
 ## Python Solutions
 
+| difficulty | problem |
+|------------|---------|
 | hard   | [42. Trapping Rain Water](python/hard/0042-trapping-rain-water/0042-trapping-rain-water.py) |
 | medium | [71. Simplify Path](python/medium/0070-simplify_path/0070-simplify_path.py) |
 | medium | [80. Remove Duplicates from Sorted Array II](python/medium/0080-remove_duplicates_from_sorted_array_ii/0080-remove_duplicates_from_sorted_array_ii.py) |
@@ -39,4 +41,6 @@ I use Python 3 for my solutions. Plus one in Clojure for fun even though you can
 
 ## Clojure Solutions
 
+| difficulty | problem |
+|------------|---------|
 | hard   | [42. Trapping Rain Water](clojure/hard/0042-trapping-rain-water/src/trapping_rain_water.clj) |
