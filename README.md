@@ -37,6 +37,7 @@ I use Python 3 for my solutions. Plus one in Clojure for fun even though you can
 | easy | [290. Word Pattern](python/easy/0290-word_pattern/0290-word_pattern.py) |
 | easy | [383. Ransom Note](python/easy/0383-ransom_note/0383-ransom_note.py) |
 | easy | [392. Is Subsequence](python/easy/0392-is_subsequence/0392-is_subsequence.py) |
+| escy | [605. Can Place Flowers](python/easy/0605-can_place_flowers/0605-can_place_flowers.py) |
 
 
 ## Clojure Solutions
